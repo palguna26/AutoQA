@@ -153,12 +153,13 @@ ruff check src/
 
 ### Render
 
-The project includes a `render.yaml` for easy deployment on Render:
+The project includes a `render.yaml` for easy deployment on Render. See [Render Deployment Guide](docs/render_deployment.md) for detailed instructions.
 
+Quick steps:
 1. Connect your GitHub repository to Render
 2. Render will detect `render.yaml` and deploy automatically
 3. Set environment variables in Render dashboard
-4. Configure GitHub App webhook URL
+4. Configure GitHub App webhook URL (see [Webhook Setup Guide](docs/webhook_setup.md))
 
 ### Docker
 
@@ -170,6 +171,8 @@ docker run -p 8000:8000 --env-file .env autoqa
 ## Documentation
 
 - [Development Setup](docs/dev_setup.md)
+- [Render Deployment](docs/render_deployment.md)
+- [Webhook Setup](docs/webhook_setup.md)
 - [GitHub Permissions](docs/github_permissions.md)
 - [CI Contract](docs/ci_contract.md)
 - [Runbook](docs/runbook.md)
