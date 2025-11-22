@@ -1,5 +1,6 @@
 """Configuration management using pydantic-settings."""
 from pydantic_settings import BaseSettings
+from pydantic import field_validator
 from typing import Optional
 
 
@@ -13,6 +14,20 @@ class Settings(BaseSettings):
     
     # Database Configuration
     database_url: str
+    
+    @field_validator('database_url')
+    @classmethod
+    def normalize_database_url(cls, v: str) -> str:
+        """Normalize database URL to use asyncpg driver for async SQLAlchemy.
+        
+        Render and other providers often give postgresql:// URLs which default to psycopg2.
+        We need postgresql+asyncpg:// for async SQLAlchemy.
+        """
+        if v and v.startswith('postgresql://'):
+            return v.replace('postgresql://', 'postgresql+asyncpg://', 1)
+        elif v and v.startswith('postgres://'):
+            return v.replace('postgres://', 'postgresql+asyncpg://', 1)
+        return v
     
     # Redis Configuration (optional)
     redis_url: Optional[str] = "redis://localhost:6379/0"
